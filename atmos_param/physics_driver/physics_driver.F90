@@ -550,6 +550,11 @@ type (clouds_from_moist_block_type) :: Restart
 type(precip_flux_type)              :: Precip_flux
 
 
+
+!--> h1g, 2019-11-25
+integer   ::  itrac
+!<-- h1g, 2019-11-25
+
                             contains
 
 
@@ -810,6 +815,8 @@ real,    dimension(:,:,:),    intent(out),  optional :: diffm, difft
       Physics%control%nqr = get_tracer_index (MODEL_ATMOS, 'rainwat')
       Physics%control%nqs = get_tracer_index (MODEL_ATMOS, 'snowwat')
       Physics%control%nqg = get_tracer_index (MODEL_ATMOS, 'graupel')
+      Physics%control%nqnr = get_tracer_index (MODEL_ATMOS, 'rain_num')
+      Physics%control%nqns = get_tracer_index (MODEL_ATMOS, 'snow_num')
 
 !-----------------------------------------------------------------------
 !   allocate a logical array to define whether a tracer is a cloud tracer
@@ -845,6 +852,12 @@ real,    dimension(:,:,:),    intent(out),  optional :: diffm, difft
       endif
       if (Physics%control%nqg    /= NO_TRACER) then
         Physics%control%cloud_tracer(Physics%control%nqg   ) = .TRUE.
+      endif
+      if (Physics%control%nqnr    /= NO_TRACER) then
+        Physics%control%cloud_tracer(Physics%control%nqnr   ) = .TRUE.
+      endif
+      if (Physics%control%nqns    /= NO_TRACER) then
+        Physics%control%cloud_tracer(Physics%control%nqns   ) = .TRUE.
       endif
 
 !----------------------------------------------------------------------
